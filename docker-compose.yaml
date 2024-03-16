@@ -1,0 +1,26 @@
+version: "4"
+services:
+  auth:
+    build: ./auth-api
+    ports:
+      - '8000:3000'
+    environment:
+      - TOKEN_KEY
+  users:
+    build: ./user-api
+    ports:
+      - '8080:3000'
+    environment:
+      - MONGODB_CONNECTION_URI
+      - AUTH_API_ADDRESS
+    env_file:
+      - ./.env
+  tasks:
+    build: ./task_api
+    ports:
+      - '3000:8080'
+    environment:
+      - MONGODB_CONNECTION_URI
+      - TOKEN_KEY
+    env_file:
+      - ./.env
